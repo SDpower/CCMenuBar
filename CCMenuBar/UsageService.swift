@@ -19,14 +19,25 @@ enum UsageCategory: String, CaseIterable, Identifiable {
 
     var id: String { rawValue }
 
-    /// 顯示名稱
+    /// 顯示名稱（彈出面板用）
     var displayName: String {
         switch self {
-        case .fiveHour:         return "5 小時"
-        case .sevenDay:         return "7 天"
-        case .sevenDaySonnet:   return "7 天 Sonnet"
-        case .sevenDayOpus:     return "7 天 Opus"
+        case .fiveHour:          return "5 小時"
+        case .sevenDay:          return "7 天"
+        case .sevenDaySonnet:    return "7 天 Sonnet"
+        case .sevenDayOpus:      return "7 天 Opus"
         case .sevenDayOauthApps: return "7 天 OAuth Apps"
+        }
+    }
+
+    /// 短標籤（Menu Bar 顯示用）
+    var shortLabel: String {
+        switch self {
+        case .fiveHour:          return "5h"
+        case .sevenDay:          return "7d"
+        case .sevenDaySonnet:    return "Son"
+        case .sevenDayOpus:      return "Opus"
+        case .sevenDayOauthApps: return "OAuth"
         }
     }
 }

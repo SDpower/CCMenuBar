@@ -6,7 +6,9 @@ macOS Menu Bar App，即時顯示 Claude Code 的 API 用量限制。
 
 ## 功能
 
-- 顯示四種用量指標：5 小時、7 天、7 天 Sonnet、7 天 Opus
+- 顯示五種用量指標：5 小時、7 天、7 天 Sonnet、7 天 Opus、7 天 OAuth Apps
+- Menu Bar 儀表盤圖示動態反映目前用量（指針位置隨用量變化）
+- 可自訂 Menu Bar 顯示內容：選擇要在圖示旁顯示哪些指標的數字
 - 進度條顏色依用量變化（綠 / 黃 / 橙 / 紅）
 - 顯示每個指標的重設時間
 - 每 5 分鐘自動刷新，也可手動點擊刷新
@@ -27,6 +29,14 @@ App 依下列優先順序讀取 OAuth Token：
 
 只要已登入 Claude Code，Token 會自動從 Keychain 或 credentials 檔案讀取，無需額外設定。
 
+## 安全性說明
+
+首次啟動時，macOS 可能會出現以下對話框，詢問是否允許 CCMenuBar 存取 Claude Code 的 Keychain 項目：
+
+> *「CCMenuBar 想要存取鑰匙圈中的項目 'Claude Code-credentials'。」*
+
+這是正常行為，並非安全威脅。CCMenuBar 需要讀取由 Claude Code 儲存在系統 Keychain 中的 OAuth Token，才能向 API 發出認證請求。請點擊**允許**（或**永遠允許**以避免每次詢問）。App 不會儲存、傳送或修改任何 Keychain 資料，僅用於讀取 Token。
+
 ## 建置方式
 
 ```bash
@@ -45,7 +55,7 @@ CCMenuBar/
 ├── ContentView.swift        # 彈出視窗主 UI
 ├── UsageService.swift       # API 呼叫與資料模型
 ├── TokenProvider.swift      # OAuth Token 讀取邏輯
-├── UsageViewModel.swift     # 狀態管理與自動刷新
+├── UsageViewModel.swift     # 狀態管理、自動刷新與 Menu Bar 顯示設定
 └── UsageRowView.swift       # 單列使用量 UI 元件
 ```
 

@@ -7,6 +7,7 @@
 
 import Foundation
 import Observation
+import SwiftUI
 
 // MARK: - 載入狀態
 
@@ -29,6 +30,35 @@ final class UsageViewModel {
     var state: LoadingState = .idle
     var usageItems: [(category: UsageCategory, info: UsageInfo)] = []
     var lastUpdated: Date?
+
+    /// 要在 Menu Bar 文字區顯示的類別（逗號分隔的 rawValue，持久化存入 UserDefaults）
+    @ObservationIgnored
+    @AppStorage("menuBarCategories") var menuBarCategoriesRaw: String = UsageCategory.fiveHour.rawValue
+
+    /// 儀表盤圖示所對應的類別（持久化存入 UserDefaults）
+    @ObservationIgnored
+    @AppStorage("gaugeCategory") var gaugeCategoryRaw: String = UsageCategory.fiveHour.rawValue
+
+    /// Menu Bar 顯示文字（如 "5h:8% 7d:36%"）
+    var menuBarText: String {
+        let selectedKeys = Set(menuBarCategoriesRaw.split(separator: ",").map(String.init))
+        let parts = usageItems
+            .filter { selectedKeys.contains($0.category.rawValue) }
+            .map { "\($0.category.shortLabel):\(Int($0.info.utilization.rounded()))%" }
+        return parts.isEmpty ? "—" : parts.joined(separator: " ")
+    }
+
+    /// 依照指定類別的用量，回傳對應的儀表盤 SF Symbol 名稱
+    var gaugeSymbol: String {
+        guard let item = usageItems.first(where: { $0.category.rawValue == gaugeCategoryRaw }) else {
+            return "gauge.with.dots.needle.bottom.0percent"
+        }
+        switch item.info.utilization {
+        case 0..<15:   return "gauge.with.dots.needle.bottom.0percent"
+        case 15..<65:  return "gauge.with.dots.needle.bottom.50percent"
+        default:       return "gauge.with.dots.needle.bottom.100percent"
+        }
+    }
 
     // MARK: - 私有屬性
 

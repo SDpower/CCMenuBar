@@ -38,3 +38,6 @@ Carthage/Build/
 
 # SPM resolved (視需求保留或忽略)
 # Package.resolved
+
+# 發布產出
+release/

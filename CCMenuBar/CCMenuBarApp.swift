@@ -9,9 +9,23 @@ import SwiftUI
 
 @main
 struct CCMenuBarApp: App {
+    // ViewModel 提升到 App 層級，讓 Menu Bar label 與彈出面板共用同一份資料
+    @State private var viewModel = UsageViewModel()
+
     var body: some Scene {
-        MenuBarExtra("Claude 使用量", systemImage: "chart.bar.fill") {
-            ContentView()
+        MenuBarExtra {
+            ContentView(viewModel: viewModel)
+        } label: {
+            // 直接在 Menu Bar 顯示儀表盤圖示 + 用量數字
+            HStack(spacing: 4) {
+                Image(systemName: viewModel.gaugeSymbol)
+                Text(viewModel.menuBarText)
+                    .monospacedDigit()
+            }
+            // App 啟動時立即開始自動刷新，不等 ContentView 開啟
+            .task {
+                viewModel.startAutoRefresh()
+            }
         }
         .menuBarExtraStyle(.window)
     }

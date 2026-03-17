@@ -6,7 +6,9 @@ A macOS Menu Bar app that displays real-time Claude Code API usage limits.
 
 ## Features
 
-- Displays four usage metrics: 5-hour, 7-day, 7-day Sonnet, and 7-day Opus
+- Displays usage metrics: 5-hour, 7-day, 7-day Sonnet, 7-day Opus, and 7-day OAuth Apps
+- Dynamic gauge icon in the Menu Bar — needle position reflects current utilization
+- Configurable Menu Bar display: choose which metrics appear as text alongside the icon
 - Color-coded progress bars based on utilization (green / yellow / orange / red)
 - Shows reset time for each metric
 - Auto-refreshes every 5 minutes; manual refresh available via toolbar button
@@ -27,6 +29,14 @@ The app reads the OAuth token in the following priority order:
 
 No manual configuration needed — the token is automatically discovered once you are signed in to Claude Code.
 
+## Security Note
+
+On first launch, macOS may display a dialog asking whether to allow CCMenuBar to access Keychain items created by Claude Code:
+
+> *"CCMenuBar wants to access the item 'Claude Code-credentials' in your keychain."*
+
+This is expected behavior. The app reads the OAuth token stored by Claude Code in the system Keychain to authenticate API requests. Click **Allow** (or **Always Allow** to avoid repeated prompts). The app does not store, transmit, or modify any Keychain data beyond reading the token.
+
 ## Build
 
 ```bash
@@ -45,7 +55,7 @@ CCMenuBar/
 ├── ContentView.swift        # Popup window main UI
 ├── UsageService.swift       # API call and data models
 ├── TokenProvider.swift      # OAuth token resolution logic
-├── UsageViewModel.swift     # State management and auto-refresh
+├── UsageViewModel.swift     # State management, auto-refresh, and Menu Bar display settings
 └── UsageRowView.swift       # Single usage row UI component
 ```
 
