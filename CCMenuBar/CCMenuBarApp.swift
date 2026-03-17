@@ -10,8 +10,9 @@ import SwiftUI
 @main
 struct CCMenuBarApp: App {
     var body: some Scene {
-        WindowGroup {
+        MenuBarExtra("Claude 使用量", systemImage: "chart.bar.fill") {
             ContentView()
         }
+        .menuBarExtraStyle(.window)
     }
 }

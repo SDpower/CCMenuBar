@@ -18,7 +18,7 @@ final class CCMenuBarUITestsLaunchTests: XCTestCase {
     }
 
     @MainActor
-    func testLaunch() throws {
+    func testLaunch() async throws {
         let app = XCUIApplication()
         app.launch()
 
