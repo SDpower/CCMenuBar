@@ -17,7 +17,7 @@ struct ContentView: View {
             HStack {
                 Image(systemName: "chart.bar.fill")
                     .foregroundStyle(.blue)
-                Text("Claude 使用量")
+                Text("Claude Usage")
                     .font(.headline)
                 Spacer()
                 // 手動刷新按鈕
@@ -39,7 +39,7 @@ struct ContentView: View {
                     Spacer()
                     ProgressView()
                         .controlSize(.small)
-                    Text("載入中...")
+                    Text("Loading...")
                         .foregroundStyle(.secondary)
                         .padding(.leading, 4)
                     Spacer()
@@ -52,7 +52,8 @@ struct ContentView: View {
                 }
 
                 if let lastUpdated = viewModel.lastUpdated {
-                    Text("更新於 \(lastUpdated.formatted(date: .omitted, time: .standard))")
+                    let timeString = lastUpdated.formatted(date: .omitted, time: .standard)
+                    Text("Updated at \(timeString)")
                         .font(.caption2)
                         .foregroundStyle(.tertiary)
                 }
@@ -75,7 +76,7 @@ struct ContentView: View {
 
             // Menu Bar 顯示設定
             VStack(alignment: .leading, spacing: 6) {
-                Text("Menu Bar 顯示")
+                Text("Menu Bar Display")
                     .font(.caption)
                     .foregroundStyle(.secondary)
 
@@ -93,7 +94,7 @@ struct ContentView: View {
 
                 // 儀表盤圖示來源
                 HStack {
-                    Text("儀表盤指標")
+                    Text("Gauge Indicator")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                     Spacer()
@@ -114,7 +115,7 @@ struct ContentView: View {
             Divider()
 
             // 結束按鈕
-            Button("結束 CCMenuBar") {
+            Button("Quit CCMenuBar") {
                 NSApplication.shared.terminate(nil)
             }
             .buttonStyle(.plain)

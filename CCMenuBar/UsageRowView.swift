@@ -52,7 +52,7 @@ struct UsageRowView: View {
                     .font(.subheadline)
                     .fontWeight(.medium)
                 Spacer()
-                Text("\(Int(info.utilization.rounded()))%")
+                Text(verbatim: "\(Int(info.utilization.rounded()))%")
                     .font(.subheadline)
                     .fontWeight(.semibold)
                     .foregroundStyle(utilizationColor)
@@ -63,7 +63,7 @@ struct UsageRowView: View {
                 .tint(utilizationColor)
 
             // 重設時間
-            Text("重設：\(resetTimeText)")
+            Text("Resets: \(resetTimeText)")
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }

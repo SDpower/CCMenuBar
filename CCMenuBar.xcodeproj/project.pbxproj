@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		3FBD7B0E2F69A7DC00531CEB /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 3FBD7B0D2F69A7DC00531CEB /* Localizable.xcstrings */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		3FBD7AE62F6983AF00531CEB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +31,7 @@
 		3FBD7AD82F6983AE00531CEB /* CCMenuBar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CCMenuBar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FBD7AE52F6983AF00531CEB /* CCMenuBarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCMenuBarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FBD7AEF2F6983AF00531CEB /* CCMenuBarUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCMenuBarUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3FBD7B0D2F69A7DC00531CEB /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -92,6 +97,7 @@
 				3FBD7AE82F6983AF00531CEB /* CCMenuBarTests */,
 				3FBD7AF22F6983AF00531CEB /* CCMenuBarUITests */,
 				3FBD7AD92F6983AE00531CEB /* Products */,
+				3FBD7B0D2F69A7DC00531CEB /* Localizable.xcstrings */,
 			);
 			sourceTree = "<group>";
 		};
@@ -225,6 +231,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FBD7B0E2F69A7DC00531CEB /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

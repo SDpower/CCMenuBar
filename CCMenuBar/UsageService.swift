@@ -22,22 +22,22 @@ enum UsageCategory: String, CaseIterable, Identifiable {
     /// 顯示名稱（彈出面板用）
     var displayName: String {
         switch self {
-        case .fiveHour:          return "5 小時"
-        case .sevenDay:          return "7 天"
-        case .sevenDaySonnet:    return "7 天 Sonnet"
-        case .sevenDayOpus:      return "7 天 Opus"
-        case .sevenDayOauthApps: return "7 天 OAuth Apps"
+        case .fiveHour:          return String(localized: "5 Hours", comment: "Usage category: 5-hour usage window")
+        case .sevenDay:          return String(localized: "7 Days", comment: "Usage category: 7-day usage window")
+        case .sevenDaySonnet:    return String(localized: "7 Days Sonnet", comment: "Usage category: 7-day Sonnet model usage")
+        case .sevenDayOpus:      return String(localized: "7 Days Opus", comment: "Usage category: 7-day Opus model usage")
+        case .sevenDayOauthApps: return String(localized: "7 Days OAuth Apps", comment: "Usage category: 7-day OAuth Apps usage")
         }
     }
 
-    /// 短標籤（Menu Bar 顯示用）
+    /// 短標籤（Menu Bar 顯示用，須盡量簡短）
     var shortLabel: String {
         switch self {
-        case .fiveHour:          return "5h"
-        case .sevenDay:          return "7d"
-        case .sevenDaySonnet:    return "Son"
-        case .sevenDayOpus:      return "Opus"
-        case .sevenDayOauthApps: return "OAuth"
+        case .fiveHour:          return String(localized: "5h", comment: "KEEP SHORT ≤4 chars: Menu bar abbreviation for 5-hour usage")
+        case .sevenDay:          return String(localized: "7d", comment: "KEEP SHORT ≤4 chars: Menu bar abbreviation for 7-day usage")
+        case .sevenDaySonnet:    return String(localized: "Son", comment: "KEEP SHORT ≤4 chars: Menu bar abbreviation for Sonnet model")
+        case .sevenDayOpus:      return String(localized: "Opus", comment: "KEEP SHORT ≤4 chars: Menu bar abbreviation for Opus model")
+        case .sevenDayOauthApps: return String(localized: "OAuth", comment: "KEEP SHORT ≤5 chars: Menu bar abbreviation for OAuth Apps")
         }
     }
 }
@@ -66,15 +66,22 @@ enum UsageError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .noToken:
-            return "找不到 OAuth Token，請確認已登入 Claude Code"
+            return String(localized: "OAuth token not found. Please verify you are signed in to Claude Code.",
+                          comment: "Error: OAuth token is missing")
         case .invalidResponse:
-            return "無效的 API 回應"
+            return String(localized: "Invalid API response",
+                          comment: "Error: API returned unexpected format")
         case .httpError(let code):
-            // 401 表示 token 過期或無效
             if code == 401 {
-                return "認證失敗（\(code)），請重新登入 Claude Code"
+                return String(localized: "Authentication failed. Please sign in to Claude Code again.",
+                              comment: "Error: HTTP 401 authentication failure")
             }
-            return "HTTP 錯誤：\(code)"
+            if code == 429 {
+                return String(localized: "Usage limit reached. Please try again later.",
+                              comment: "Error: HTTP 429 rate limit exceeded")
+            }
+            return String(localized: "HTTP error: \(code)",
+                          comment: "Error: Generic HTTP error with status code")
         }
     }
 }
