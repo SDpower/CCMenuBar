@@ -7,124 +7,36 @@
 
 import Testing
 import Foundation
+import SwiftUI
 @testable import CCMenuBar
 
-// MARK: - UsageInfo 解碼測試
+// MARK: - RateLimitStatus 測試
 
-@Suite("UsageInfo 解碼")
-struct UsageInfoDecodingTests {
+@Suite("RateLimitStatus")
+struct RateLimitStatusTests {
 
-    @Test("正常欄位解碼成功")
-    func decodeValidUsageInfo() throws {
-        let json = """
-        {
-            "utilization": 36.0,
-            "resets_at": "2026-03-20T02:00:00.155344+00:00"
-        }
-        """.data(using: .utf8)!
-
-        let info = try JSONDecoder().decode(UsageInfo.self, from: json)
-        #expect(info.utilization == 36.0)
-        #expect(info.resetsAt == "2026-03-20T02:00:00.155344+00:00")
+    @Test("allowed rawValue 正確")
+    func allowedRawValue() {
+        #expect(RateLimitStatus.allowed.rawValue == "allowed")
     }
 
-    @Test("完整 API 回應解碼，null 欄位自動過濾")
-    func decodeFullResponseWithNulls() throws {
-        let json = """
-        {
-            "five_hour":  {"utilization": 7.0,  "resets_at": "2026-03-17T17:00:00+00:00"},
-            "seven_day":  {"utilization": 36.0, "resets_at": "2026-03-20T02:00:00+00:00"},
-            "seven_day_sonnet": {"utilization": 5.0, "resets_at": "2026-03-21T03:00:00+00:00"},
-            "seven_day_opus":   null,
-            "seven_day_oauth_apps": null,
-            "seven_day_cowork": null,
-            "iguana_necktie":   null
-        }
-        """.data(using: .utf8)!
-
-        let decoded = try JSONDecoder().decode([String: UsageInfo?].self, from: json)
-        let result = decoded.compactMapValues { $0 }
-
-        // null 欄位應被過濾，只剩 3 筆
-        #expect(result.count == 3)
-        #expect(result["five_hour"]?.utilization == 7.0)
-        #expect(result["seven_day"]?.utilization == 36.0)
-        #expect(result["seven_day_sonnet"]?.utilization == 5.0)
-        #expect(result["seven_day_opus"] == nil)
+    @Test("rejected rawValue 正確")
+    func rejectedRawValue() {
+        #expect(RateLimitStatus.rejected.rawValue == "rejected")
     }
 
-    @Test("utilization 為 0 時也能正常解碼")
-    func decodeZeroUtilization() throws {
-        let json = """
-        {"utilization": 0.0, "resets_at": "2026-03-20T00:00:00+00:00"}
-        """.data(using: .utf8)!
-
-        let info = try JSONDecoder().decode(UsageInfo.self, from: json)
-        #expect(info.utilization == 0.0)
+    @Test("從字串解碼 allowed")
+    func decodeAllowed() throws {
+        let data = "\"allowed\"".data(using: .utf8)!
+        let status = try JSONDecoder().decode(RateLimitStatus.self, from: data)
+        #expect(status == .allowed)
     }
 
-    @Test("utilization 為 100 時也能正常解碼")
-    func decodeFullUtilization() throws {
-        let json = """
-        {"utilization": 100.0, "resets_at": "2026-03-20T00:00:00+00:00"}
-        """.data(using: .utf8)!
-
-        let info = try JSONDecoder().decode(UsageInfo.self, from: json)
-        #expect(info.utilization == 100.0)
-    }
-}
-
-// MARK: - UsageCategory 測試
-
-@Suite("UsageCategory")
-struct UsageCategoryTests {
-
-    @Test("rawValue 對應正確 API 欄位名稱")
-    func rawValues() {
-        #expect(UsageCategory.fiveHour.rawValue == "five_hour")
-        #expect(UsageCategory.sevenDay.rawValue == "seven_day")
-        #expect(UsageCategory.sevenDaySonnet.rawValue == "seven_day_sonnet")
-        #expect(UsageCategory.sevenDayOpus.rawValue == "seven_day_opus")
-        #expect(UsageCategory.sevenDayOauthApps.rawValue == "seven_day_oauth_apps")
-    }
-
-    @Test("displayName 不為空字串")
-    func displayNamesNotEmpty() {
-        for category in UsageCategory.allCases {
-            #expect(!category.displayName.isEmpty, "displayName 不應為空：\(category.rawValue)")
-        }
-    }
-
-    @Test("allCases 包含所有類別")
-    func allCasesCount() {
-        #expect(UsageCategory.allCases.count == 5)
-    }
-
-    @Test("id 與 rawValue 一致")
-    func idEqualsRawValue() {
-        for category in UsageCategory.allCases {
-            #expect(category.id == category.rawValue)
-        }
-    }
-}
-
-// MARK: - TokenProvider 測試
-
-@Suite("TokenProvider")
-struct TokenProviderTests {
-
-    @Test("環境變數存在時優先回傳")
-    func returnsEnvironmentToken() {
-        // 注意：實際測試中無法直接設定 ProcessInfo 的環境變數
-        // 此測試驗證當環境變數不存在時回傳 nil（沒有 credentials 檔案時）
-        // 完整的環境變數測試需要透過 scheme 的 Environment Variables 設定
-        let provider = TokenProvider()
-        // 若測試環境沒有設定 CLAUDE_CODE_OAUTH_TOKEN，不應 crash
-        let token = provider.getToken()
-        // token 可能是 nil（沒有任何來源）或是有效的字串，不應 throw
-        if let token {
-            #expect(!token.isEmpty, "token 不應為空字串")
-        }
+    @Test("從字串解碼 rejected")
+    func decodeRejected() throws {
+        let data = "\"rejected\"".data(using: .utf8)!
+        let status = try JSONDecoder().decode(RateLimitStatus.self, from: data)
+        #expect(status == .rejected)
     }
 }
 
@@ -133,24 +45,211 @@ struct TokenProviderTests {
 @Suite("UsageError")
 struct UsageErrorTests {
 
-    @Test("noToken 錯誤訊息不為空")
-    func noTokenDescription() {
-        let error = UsageError.noToken
+    @Test("cliNotFound 錯誤訊息不為空")
+    func cliNotFoundDescription() {
+        let error = UsageError.cliNotFound
         #expect(!error.localizedDescription.isEmpty)
     }
 
-    @Test("httpError 包含狀態碼")
-    func httpErrorDescription() {
-        let error401 = UsageError.httpError(statusCode: 401)
-        #expect(error401.localizedDescription.contains("401"))
-
-        let error500 = UsageError.httpError(statusCode: 500)
-        #expect(error500.localizedDescription.contains("500"))
+    @Test("cliExecutionFailed 包含原始訊息")
+    func cliExecutionFailedDescription() {
+        let msg = "exit code 1: permission denied"
+        let error = UsageError.cliExecutionFailed(msg)
+        #expect(!error.localizedDescription.isEmpty)
     }
 
-    @Test("invalidResponse 錯誤訊息不為空")
-    func invalidResponseDescription() {
-        let error = UsageError.invalidResponse
+    @Test("noRateLimitEvent 錯誤訊息不為空")
+    func noRateLimitEventDescription() {
+        let error = UsageError.noRateLimitEvent
         #expect(!error.localizedDescription.isEmpty)
+    }
+
+    @Test("parseError 包含原始訊息")
+    func parseErrorDescription() {
+        let detail = "unexpected null"
+        let error = UsageError.parseError(detail)
+        #expect(!error.localizedDescription.isEmpty)
+    }
+}
+
+// MARK: - LoadingState 測試
+
+@Suite("LoadingState")
+struct LoadingStateTests {
+
+    @Test("error 狀態帶 UsageError — cliNotFound 可 pattern match")
+    func errorCLINotFound() {
+        let state = LoadingState.error(.cliNotFound)
+        if case .error(let e) = state, case .cliNotFound = e {
+            // 正確 pattern match
+        } else {
+            Issue.record("LoadingState.error(.cliNotFound) pattern match 失敗")
+        }
+    }
+
+    @Test("error 狀態帶 UsageError — cliExecutionFailed 帶訊息")
+    func errorCLIExecutionFailed() {
+        let msg = "exit code 1"
+        let state = LoadingState.error(.cliExecutionFailed(msg))
+        if case .error(let e) = state, case .cliExecutionFailed(let m) = e {
+            #expect(m == msg)
+        } else {
+            Issue.record("LoadingState.error(.cliExecutionFailed) pattern match 失敗")
+        }
+    }
+}
+
+// MARK: - UsageViewModel 測試
+
+@Suite("UsageViewModel")
+@MainActor
+struct UsageViewModelTests {
+
+    @Test("menuBarText — 無資料時回傳 —")
+    func menuBarTextNoData() {
+        let vm = UsageViewModel()
+        #expect(vm.menuBarText == "—")
+    }
+
+    @Test("menuBarText — 有資料時回傳非空字串")
+    func menuBarTextWithData() {
+        let vm = UsageViewModel()
+        vm.rateLimitInfo = RateLimitInfo(
+            status: .allowed,
+            resetsAt: Date().addingTimeInterval(3600),
+            rateLimitType: "five_hour",
+            overageStatus: "allowed",
+            isUsingOverage: false
+        )
+        #expect(!vm.menuBarText.isEmpty)
+        #expect(vm.menuBarText != "—")
+    }
+
+    @Test("gaugeSymbol — 無資料時為 0%")
+    func gaugeSymbolNoData() {
+        let vm = UsageViewModel()
+        #expect(vm.gaugeSymbol == "gauge.with.dots.needle.bottom.0percent")
+    }
+
+    @Test("gaugeSymbol — allowed 剩餘接近 5 小時時為 0%")
+    func gaugeSymbolAllowedFull() {
+        let vm = UsageViewModel()
+        // 剩餘 4.9 小時 ≈ 已用 2%，落在 0% 區間
+        vm.rateLimitInfo = RateLimitInfo(
+            status: .allowed,
+            resetsAt: Date().addingTimeInterval(4.9 * 3600),
+            rateLimitType: "five_hour",
+            overageStatus: "allowed",
+            isUsingOverage: false
+        )
+        #expect(vm.gaugeSymbol == "gauge.with.dots.needle.bottom.0percent")
+    }
+
+    @Test("gaugeSymbol — allowed 剩餘約 2.5 小時時為 50%")
+    func gaugeSymbolAllowedHalf() {
+        let vm = UsageViewModel()
+        // 剩餘 2.5 小時 = 已用 50%
+        vm.rateLimitInfo = RateLimitInfo(
+            status: .allowed,
+            resetsAt: Date().addingTimeInterval(2.5 * 3600),
+            rateLimitType: "five_hour",
+            overageStatus: "allowed",
+            isUsingOverage: false
+        )
+        #expect(vm.gaugeSymbol == "gauge.with.dots.needle.bottom.50percent")
+    }
+
+    @Test("gaugeSymbol — rejected 時強制為 100%")
+    func gaugeSymbolRejected() {
+        let vm = UsageViewModel()
+        vm.rateLimitInfo = RateLimitInfo(
+            status: .rejected,
+            resetsAt: Date().addingTimeInterval(3600),
+            rateLimitType: "five_hour",
+            overageStatus: "rejected",
+            isUsingOverage: true
+        )
+        #expect(vm.gaugeSymbol == "gauge.with.dots.needle.bottom.100percent")
+    }
+
+    @Test("gaugeColor — 無資料時為 primary")
+    func gaugeColorNoData() {
+        let vm = UsageViewModel()
+        #expect(vm.gaugeColor == .primary)
+    }
+
+    @Test("gaugeColor — rejected 時為紅色")
+    func gaugeColorRejected() {
+        let vm = UsageViewModel()
+        vm.rateLimitInfo = RateLimitInfo(
+            status: .rejected,
+            resetsAt: Date().addingTimeInterval(3600),
+            rateLimitType: "five_hour",
+            overageStatus: "rejected",
+            isUsingOverage: false
+        )
+        #expect(vm.gaugeColor == .red)
+    }
+
+    @Test("gaugeColor — isUsingOverage 時為橘色")
+    func gaugeColorOverage() {
+        let vm = UsageViewModel()
+        vm.rateLimitInfo = RateLimitInfo(
+            status: .allowed,
+            resetsAt: Date().addingTimeInterval(3600),
+            rateLimitType: "five_hour",
+            overageStatus: "allowed",
+            isUsingOverage: true
+        )
+        #expect(vm.gaugeColor == .orange)
+    }
+
+    @Test("gaugeColor — 正常 allowed 時為 primary")
+    func gaugeColorNormal() {
+        let vm = UsageViewModel()
+        vm.rateLimitInfo = RateLimitInfo(
+            status: .allowed,
+            resetsAt: Date().addingTimeInterval(3600),
+            rateLimitType: "five_hour",
+            overageStatus: "allowed",
+            isUsingOverage: false
+        )
+        #expect(vm.gaugeColor == .primary)
+    }
+}
+
+// MARK: - RateLimitInfo 建構測試
+
+@Suite("RateLimitInfo")
+struct RateLimitInfoTests {
+
+    @Test("allowed 狀態 resetsAt 保留正確")
+    func allowedInfo() {
+        let date = Date(timeIntervalSince1970: 1774044000)
+        let info = RateLimitInfo(
+            status: .allowed,
+            resetsAt: date,
+            rateLimitType: "five_hour",
+            overageStatus: "rejected",
+            isUsingOverage: false
+        )
+        #expect(info.status == .allowed)
+        #expect(info.resetsAt == date)
+        #expect(info.rateLimitType == "five_hour")
+        #expect(info.isUsingOverage == false)
+    }
+
+    @Test("rejected 狀態建構正確")
+    func rejectedInfo() {
+        let date = Date(timeIntervalSince1970: 1774044000)
+        let info = RateLimitInfo(
+            status: .rejected,
+            resetsAt: date,
+            rateLimitType: "five_hour",
+            overageStatus: "rejected",
+            isUsingOverage: true
+        )
+        #expect(info.status == .rejected)
+        #expect(info.isUsingOverage == true)
     }
 }

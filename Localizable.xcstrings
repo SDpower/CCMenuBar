@@ -1,9 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "" : {
-
-    },
     "5 Hours" : {
       "comment" : "Usage category: 5-hour usage window",
       "localizations" : {
@@ -75,854 +72,292 @@
         }
       }
     },
-    "5h" : {
-      "comment" : "KEEP SHORT ≤4 chars: Menu bar abbreviation for 5-hour usage",
+    "Available" : {
+      "comment" : "Rate limit status: requests are allowed",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "5h"
+            "value" : "Verfügbar"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "5h"
+            "value" : "Disponible"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "5h"
+            "value" : "Disponible"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "5h"
+            "value" : "उपलब्ध"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "5j"
+            "value" : "Tersedia"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "5h"
+            "value" : "Disponibile"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "5時"
+            "value" : "利用可能"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "5시"
+            "value" : "사용 가능"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "5h"
+            "value" : "Disponível"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "5时"
+            "value" : "可用"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "5時"
+            "value" : "可用"
           }
         }
       }
     },
-    "7 Days" : {
-      "comment" : "Usage category: 7-day usage window",
+    "Claude CLI not found. Please install Claude Code." : {
+      "comment" : "Error: claude CLI not found in expected paths",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "7 Tage"
+            "value" : "Claude CLI nicht gefunden. Bitte installieren Sie Claude Code."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "7 días"
+            "value" : "Claude CLI no encontrado. Por favor, instala Claude Code."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "7 jours"
+            "value" : "Claude CLI introuvable. Veuillez installer Claude Code."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "7 दिन"
+            "value" : "Claude CLI नहीं मिला। कृपया Claude Code इंस्टॉल करें।"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "7 Hari"
+            "value" : "Claude CLI tidak ditemukan. Silakan instal Claude Code."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "7 giorni"
+            "value" : "Claude CLI non trovato. Installa Claude Code."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "7 日間"
+            "value" : "Claude CLI が見つかりません。Claude Code をインストールしてください。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "7 일"
+            "value" : "Claude CLI를 찾을 수 없습니다. Claude Code를 설치하세요."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "7 dias"
+            "value" : "Claude CLI não encontrado. Por favor, instale o Claude Code."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "7 天"
+            "value" : "找不到 Claude CLI，请安装 Claude Code"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "7 天"
+            "value" : "找不到 Claude CLI，請安裝 Claude Code"
           }
         }
       }
     },
-    "7 Days OAuth Apps" : {
-      "comment" : "Usage category: 7-day OAuth Apps usage",
+    "Claude Rate Limit" : {
+      "comment" : "Main window title showing Claude rate limit status",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "7 Tage OAuth Apps"
+            "value" : "Claude Rate-Limit"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "7 días OAuth Apps"
+            "value" : "Límite de Claude"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "7 jours OAuth Apps"
+            "value" : "Limite Claude"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "7 दिन OAuth Apps"
+            "value" : "Claude दर सीमा"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "7 Hari OAuth Apps"
+            "value" : "Batas Rate Claude"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "7 giorni OAuth Apps"
+            "value" : "Limite Claude"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "7 日間 OAuth Apps"
+            "value" : "Claude レート制限"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "7 일 OAuth Apps"
+            "value" : "Claude 속도 제한"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "7 dias OAuth Apps"
+            "value" : "Limite de Taxa Claude"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "7 天 OAuth Apps"
+            "value" : "Claude 速率限制"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "7 天 OAuth Apps"
+            "value" : "Claude 速率限制"
           }
         }
       }
     },
-    "7 Days Opus" : {
-      "comment" : "Usage category: 7-day Opus model usage",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "7 Tage Opus"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "7 días Opus"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "7 jours Opus"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "7 दिन Opus"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "7 Hari Opus"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "7 giorni Opus"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "7 日間 Opus"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "7 일 Opus"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "7 dias Opus"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "7 天 Opus"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "7 天 Opus"
-          }
-        }
-      }
+    "CLI execution failed: %@" : {
+      "comment" : "Error: claude CLI process failed"
     },
-    "7 Days Sonnet" : {
-      "comment" : "Usage category: 7-day Sonnet model usage",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "7 Tage Sonnet"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "7 días Sonnet"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "7 jours Sonnet"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "7 दिन Sonnet"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "7 Hari Sonnet"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "7 giorni Sonnet"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "7 日間 Sonnet"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "7 일 Sonnet"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "7 dias Sonnet"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "7 天 Sonnet"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "7 天 Sonnet"
-          }
-        }
-      }
+    "Failed to parse CLI output: %@" : {
+      "comment" : "Error: JSON parsing failure from CLI output"
     },
-    "7d" : {
-      "comment" : "KEEP SHORT ≤4 chars: Menu bar abbreviation for 7-day usage",
+    "Install Claude Code →" : {
+      "comment" : "Button to open Claude Code installation page",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "7T"
+            "value" : "Claude Code installieren →"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "7d"
+            "value" : "Instalar Claude Code →"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "7j"
+            "value" : "Installer Claude Code →"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "7दि"
+            "value" : "Claude Code इंस्टॉल करें →"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "7h"
+            "value" : "Instal Claude Code →"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "7g"
+            "value" : "Installa Claude Code →"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "7日"
+            "value" : "Claude Code をインストール →"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "7일"
+            "value" : "Claude Code 설치 →"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "7d"
+            "value" : "Instalar Claude Code →"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "7天"
+            "value" : "安装 Claude Code →"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "7天"
-          }
-        }
-      }
-    },
-    "Authentication failed. Please sign in to Claude Code again." : {
-      "comment" : "Error: HTTP 401 authentication failure",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Authentifizierung fehlgeschlagen. Bitte melden Sie sich erneut bei Claude Code an."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Autenticación fallida. Por favor, inicia sesión en Claude Code nuevamente."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Échec de l'authentification. Veuillez vous reconnecter à Claude Code."
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "प्रमाणीकरण विफल। कृपया Claude Code में पुनः साइन इन करें।"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Autentikasi gagal. Silakan masuk ke Claude Code lagi."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Autenticazione fallita. Effettua nuovamente l'accesso a Claude Code."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "認証に失敗しました。Claude Code に再サインインしてください。"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "인증 실패. Claude Code에 다시 로그인하세요."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Falha na autenticação. Por favor, faça login novamente no Claude Code."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "認證失敗，請重新登入 Claude Code"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "認證失敗，請重新登入 Claude Code"
-          }
-        }
-      }
-    },
-    "Usage limit reached. Please try again later." : {
-      "comment" : "Error: HTTP 429 rate limit exceeded",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nutzungslimit erreicht. Bitte versuchen Sie es später erneut."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Límite de uso alcanzado. Por favor, inténtalo de nuevo más tarde."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Limite d'utilisation atteinte. Veuillez réessayer plus tard."
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "उपयोग सीमा पहुंच गई। कृपया बाद में पुनः प्रयास करें।"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Batas penggunaan tercapai. Silakan coba lagi nanti."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Limite di utilizzo raggiunto. Riprova più tardi."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "使用制限に達しました。後でもう一度お試しください。"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "사용 한도에 도달했습니다. 나중에 다시 시도하세요."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Limite de uso atingido. Por favor, tente novamente mais tarde."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已达到使用上限，请稍后再试"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已達到使用上限，請稍後再試"
-          }
-        }
-      }
-    },
-    "Claude Usage" : {
-      "comment" : "Main window title showing Claude API usage",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Claude Nutzung"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uso de Claude"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Utilisation Claude"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Claude उपयोग"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Penggunaan Claude"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Utilizzo Claude"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Claude 使用量"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Claude 사용량"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uso do Claude"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Claude 使用量"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Claude 使用量"
-          }
-        }
-      }
-    },
-    "Gauge Indicator" : {
-      "comment" : "Label for selecting which metric drives the gauge icon",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Anzeige-Indikator"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Indicador del marcador"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Indicateur de jauge"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "गेज संकेतक"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Indikator Gauge"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Indicatore gauge"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ゲージ指標"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "게이지 지표"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Indicador do gauge"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "仪表盘指标"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "儀表盤指標"
-          }
-        }
-      }
-    },
-    "HTTP error: %lld" : {
-      "comment" : "Error: Generic HTTP error with status code",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "HTTP-Fehler: %lld"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Error HTTP: %lld"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Erreur HTTP : %lld"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "HTTP त्रुटि: %lld"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kesalahan HTTP: %lld"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Errore HTTP: %lld"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "HTTP エラー：%lld"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "HTTP 오류: %lld"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Erro HTTP: %lld"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "HTTP 错误：%lld"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "HTTP 錯誤：%lld"
-          }
-        }
-      }
-    },
-    "Invalid API response" : {
-      "comment" : "Error: API returned unexpected format",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ungültige API-Antwort"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Respuesta de API inválida"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Réponse API invalide"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "अमान्य API प्रतिक्रिया"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Respons API tidak valid"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Risposta API non valida"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "無効な API レスポンス"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "잘못된 API 응답"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Resposta de API inválida"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "无效的 API 响应"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "無效的 API 回應"
+            "value" : "安裝 Claude Code →"
           }
         }
       }
@@ -998,286 +433,73 @@
         }
       }
     },
-    "Menu Bar Display" : {
-      "comment" : "Section header for configuring which metrics appear in the menu bar",
+    "No rate limit data received." : {
+      "comment" : "Error: CLI output contained no rate_limit_event",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Menüleiste anzeigen"
+            "value" : "Keine Rate-Limit-Daten empfangen."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Visualización de la barra de menú"
+            "value" : "No se recibieron datos de límite de velocidad."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Affichage dans la barre de menus"
+            "value" : "Aucune donnée de limite de débit reçue."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "मेनू बार प्रदर्शन"
+            "value" : "कोई दर सीमा डेटा प्राप्त नहीं हुआ।"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tampilan Menu Bar"
+            "value" : "Tidak ada data batas kecepatan yang diterima."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Visualizzazione barra dei menu"
+            "value" : "Nessun dato sul limite di velocità ricevuto."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "メニューバー表示"
+            "value" : "レート制限データが受信されませんでした。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "메뉴 바 표시"
+            "value" : "속도 제한 데이터가 수신되지 않았습니다."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Exibição na barra de menus"
+            "value" : "Nenhum dado de limite de taxa recebido."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Menu Bar 显示"
+            "value" : "未收到速率限制数据"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Menu Bar 顯示"
-          }
-        }
-      }
-    },
-    "OAuth" : {
-      "comment" : "KEEP SHORT ≤5 chars: Menu bar abbreviation for OAuth Apps",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OAuth"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OAuth"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OAuth"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OAuth"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OAuth"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OAuth"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OAuth"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OAuth"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OAuth"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OAuth"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OAuth"
-          }
-        }
-      }
-    },
-    "OAuth token not found. Please verify you are signed in to Claude Code." : {
-      "comment" : "Error: OAuth token is missing",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OAuth-Token nicht gefunden. Bitte prüfen Sie, ob Sie bei Claude Code angemeldet sind."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Token OAuth no encontrado. Por favor, verifica que estás conectado a Claude Code."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Token OAuth introuvable. Veuillez vérifier que vous êtes connecté à Claude Code."
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OAuth टोकन नहीं मिला। कृपया सत्यापित करें कि आप Claude Code में साइन इन हैं।"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Token OAuth tidak ditemukan. Pastikan Anda sudah masuk ke Claude Code."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Token OAuth non trovato. Verifica di aver effettuato l'accesso a Claude Code."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OAuth トークンが見つかりません。Claude Code にサインインしているか確認してください。"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OAuth 토큰을 찾을 수 없습니다. Claude Code에 로그인되어 있는지 확인하세요."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Token OAuth não encontrado. Verifique se você está conectado ao Claude Code."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "未找到 OAuth Token，请确认已登录 Claude Code"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "找不到 OAuth Token，請確認已登入 Claude Code"
-          }
-        }
-      }
-    },
-    "Opus" : {
-      "comment" : "KEEP SHORT ≤4 chars: Menu bar abbreviation for Opus model",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Opus"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Opus"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Opus"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Opus"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Opus"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Opus"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Opus"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Opus"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Opus"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Opus"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Opus"
+            "value" : "未收到速率限制資料"
           }
         }
       }
@@ -1353,6 +575,77 @@
         }
       }
     },
+    "Rate Limited" : {
+      "comment" : "Rate limit status: requests are rejected",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rate-Limit erreicht"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Límite alcanzado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Limite atteinte"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "दर सीमित"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dibatasi"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Limite raggiunto"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "レート制限中"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "속도 제한됨"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Limite atingido"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已限速"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已限速"
+          }
+        }
+      }
+    },
     "Resets: %@" : {
       "comment" : "Shows when the usage counter will reset, e.g. 'Resets: in 3 hours'",
       "localizations" : {
@@ -1420,77 +713,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "重設：%@"
-          }
-        }
-      }
-    },
-    "Son" : {
-      "comment" : "KEEP SHORT ≤4 chars: Menu bar abbreviation for Sonnet model",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Son"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Son"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Son"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Son"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Son"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Son"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Son"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Son"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Son"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Son"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Son"
           }
         }
       }

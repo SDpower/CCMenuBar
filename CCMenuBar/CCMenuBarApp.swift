@@ -19,8 +19,10 @@ struct CCMenuBarApp: App {
             // 直接在 Menu Bar 顯示儀表盤圖示 + 用量數字
             HStack(spacing: 4) {
                 Image(systemName: viewModel.gaugeSymbol)
+                    .foregroundStyle(viewModel.gaugeColor)
                 Text(viewModel.menuBarText)
                     .monospacedDigit()
+                    .foregroundStyle(viewModel.gaugeColor)
             }
             // App 啟動時立即開始自動刷新，不等 ContentView 開啟
             .task {

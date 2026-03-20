@@ -7,122 +7,193 @@
 
 import Foundation
 
-// MARK: - 使用量類別
+// MARK: - Rate Limit 狀態
 
-/// API 回傳的使用量類別（只顯示有數值的類別）
-enum UsageCategory: String, CaseIterable, Identifiable {
-    case fiveHour = "five_hour"
-    case sevenDay = "seven_day"
-    case sevenDaySonnet = "seven_day_sonnet"
-    case sevenDayOpus = "seven_day_opus"
-    case sevenDayOauthApps = "seven_day_oauth_apps"
-
-    var id: String { rawValue }
-
-    /// 顯示名稱（彈出面板用）
-    var displayName: String {
-        switch self {
-        case .fiveHour:          return String(localized: "5 Hours", comment: "Usage category: 5-hour usage window")
-        case .sevenDay:          return String(localized: "7 Days", comment: "Usage category: 7-day usage window")
-        case .sevenDaySonnet:    return String(localized: "7 Days Sonnet", comment: "Usage category: 7-day Sonnet model usage")
-        case .sevenDayOpus:      return String(localized: "7 Days Opus", comment: "Usage category: 7-day Opus model usage")
-        case .sevenDayOauthApps: return String(localized: "7 Days OAuth Apps", comment: "Usage category: 7-day OAuth Apps usage")
-        }
-    }
-
-    /// 短標籤（Menu Bar 顯示用，須盡量簡短）
-    var shortLabel: String {
-        switch self {
-        case .fiveHour:          return String(localized: "5h", comment: "KEEP SHORT ≤4 chars: Menu bar abbreviation for 5-hour usage")
-        case .sevenDay:          return String(localized: "7d", comment: "KEEP SHORT ≤4 chars: Menu bar abbreviation for 7-day usage")
-        case .sevenDaySonnet:    return String(localized: "Son", comment: "KEEP SHORT ≤4 chars: Menu bar abbreviation for Sonnet model")
-        case .sevenDayOpus:      return String(localized: "Opus", comment: "KEEP SHORT ≤4 chars: Menu bar abbreviation for Opus model")
-        case .sevenDayOauthApps: return String(localized: "OAuth", comment: "KEEP SHORT ≤5 chars: Menu bar abbreviation for OAuth Apps")
-        }
-    }
+/// Rate limit 狀態（allowed = 可用，rejected = 已達上限）
+enum RateLimitStatus: String, Codable, Sendable {
+    case allowed
+    case rejected
 }
 
 // MARK: - 資料模型
 
-/// 單一類別的使用量資訊
-nonisolated struct UsageInfo: Codable, Sendable {
-    let utilization: Double
-    let resetsAt: String
-
-    enum CodingKeys: String, CodingKey {
-        case utilization
-        case resetsAt = "resets_at"
-    }
+/// 從 claude CLI 解析出的 rate limit 資訊
+nonisolated struct RateLimitInfo: Sendable {
+    let status: RateLimitStatus
+    let resetsAt: Date
+    let rateLimitType: String
+    let overageStatus: String
+    let isUsingOverage: Bool
 }
 
 // MARK: - 錯誤定義
 
-/// 使用量 API 相關錯誤
+/// CLI 執行相關錯誤
 enum UsageError: LocalizedError {
-    case noToken
-    case invalidResponse
-    case httpError(statusCode: Int)
+    case cliNotFound
+    case cliExecutionFailed(String)
+    case noRateLimitEvent
+    case parseError(String)
 
     var errorDescription: String? {
         switch self {
-        case .noToken:
-            return String(localized: "OAuth token not found. Please verify you are signed in to Claude Code.",
-                          comment: "Error: OAuth token is missing")
-        case .invalidResponse:
-            return String(localized: "Invalid API response",
-                          comment: "Error: API returned unexpected format")
-        case .httpError(let code):
-            if code == 401 {
-                return String(localized: "Authentication failed. Please sign in to Claude Code again.",
-                              comment: "Error: HTTP 401 authentication failure")
-            }
-            if code == 429 {
-                return String(localized: "Usage limit reached. Please try again later.",
-                              comment: "Error: HTTP 429 rate limit exceeded")
-            }
-            return String(localized: "HTTP error: \(code)",
-                          comment: "Error: Generic HTTP error with status code")
+        case .cliNotFound:
+            return String(localized: "Claude CLI not found. Please install Claude Code.",
+                          comment: "Error: claude CLI not found in expected paths")
+        case .cliExecutionFailed(let msg):
+            return String(localized: "CLI execution failed: \(msg)",
+                          comment: "Error: claude CLI process failed")
+        case .noRateLimitEvent:
+            return String(localized: "No rate limit data received.",
+                          comment: "Error: CLI output contained no rate_limit_event")
+        case .parseError(let msg):
+            return String(localized: "Failed to parse CLI output: \(msg)",
+                          comment: "Error: JSON parsing failure from CLI output")
         }
     }
 }
 
-// MARK: - API 服務
+// MARK: - CLI JSON 解碼用中間結構
 
-/// 負責呼叫 Claude API 取得使用量資訊
+/// claude CLI JSON 輸出中的事件（只解碼需要的欄位）
+private struct CLIEvent: Decodable {
+    let type: String
+    let rateLimitInfo: CLIRateLimitInfo?
+
+    enum CodingKeys: String, CodingKey {
+        case type
+        case rateLimitInfo = "rate_limit_info"
+    }
+
+    struct CLIRateLimitInfo: Decodable {
+        let status: String
+        let resetsAt: Int
+        let rateLimitType: String
+        let overageStatus: String
+        let isUsingOverage: Bool
+    }
+}
+
+// MARK: - CLI 服務
+
+/// 執行 claude CLI 並解析 rate limit 資訊
 struct UsageService {
-    private static let endpoint = URL(string: "https://api.anthropic.com/api/oauth/usage")!
 
-    /// 取得使用量資訊（API 部分欄位可能為 null，會自動過濾）
-    func fetchUsage(token: String) async throws -> [String: UsageInfo] {
-        var request = URLRequest(url: Self.endpoint)
-        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        request.setValue("oauth-2025-04-20", forHTTPHeaderField: "anthropic-beta")
+    /// Claude CLI 的搜尋路徑（依優先順序）
+    /// native install: ~/.local/bin/claude
+    /// homebrew cask: /opt/homebrew/bin/claude 或 /usr/local/bin/claude
+    /// 舊版 npm: ~/.claude/bin/claude
+    private static let cliSearchPaths: [String] = [
+        "\(NSHomeDirectory())/.local/bin/claude",
+        "\(NSHomeDirectory())/.claude/bin/claude",
+        "/opt/homebrew/bin/claude",
+        "/usr/local/bin/claude"
+    ]
 
-        let (data, response) = try await URLSession.shared.data(for: request)
-
-        guard let httpResponse = response as? HTTPURLResponse else {
-            throw UsageError.invalidResponse
+    /// 找到系統中 claude CLI 的路徑
+    private func findCLIPath() -> String? {
+        for path in Self.cliSearchPaths {
+            if FileManager.default.isExecutableFile(atPath: path) {
+                return path
+            }
         }
-        guard httpResponse.statusCode == 200 else {
-            // 印出錯誤回應內容以利診斷
-            let raw = String(data: data, encoding: .utf8) ?? "(無法讀取)"
-            print("[CCMenuBar] HTTP \(httpResponse.statusCode)：\(raw)")
-            throw UsageError.httpError(statusCode: httpResponse.statusCode)
+        return nil
+    }
+
+    /// 執行 claude CLI 取得 rate limit 資訊
+    func fetchRateLimitInfo() async throws -> RateLimitInfo {
+        guard let cliPath = findCLIPath() else {
+            throw UsageError.cliNotFound
         }
 
-        // 只解碼 UsageCategory 已知的 key，忽略 extra_usage 等格式不同的欄位
-        let knownKeys = Set(UsageCategory.allCases.map(\.rawValue))
-        guard let root = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
-            throw UsageError.invalidResponse
+        let output = try await runCLI(at: cliPath)
+        return try parseRateLimitEvent(from: output)
+    }
+
+    /// 使用 Process 執行 CLI 指令，回傳 stdout 輸出
+    private func runCLI(at path: String) async throws -> String {
+        try await withCheckedThrowingContinuation { continuation in
+            let process = Process()
+            process.executableURL = URL(fileURLWithPath: path)
+            process.arguments = [
+                "--verbose",
+                "--no-session-persistence",
+                "--disable-slash-commands",
+                "--strict-mcp-config",
+                "--output-format", "json",
+                "--model", "haiku",
+                "-p", "."
+            ]
+
+            // 補充 PATH，確保 Menu Bar App 能找到相依執行檔
+            var env = ProcessInfo.processInfo.environment
+            let home = NSHomeDirectory()
+            var path = env["PATH"] ?? "/usr/bin:/bin"
+            path += ":\(home)/.local/bin:\(home)/.claude/bin:/usr/local/bin:/opt/homebrew/bin"
+            env["PATH"] = path
+            process.environment = env
+
+            let outPipe = Pipe()
+            let errPipe = Pipe()
+            process.standardOutput = outPipe
+            process.standardError = errPipe
+
+            process.terminationHandler = { proc in
+                let outData = outPipe.fileHandleForReading.readDataToEndOfFile()
+                let output = String(data: outData, encoding: .utf8) ?? ""
+
+                if proc.terminationStatus != 0 && output.isEmpty {
+                    let errData = errPipe.fileHandleForReading.readDataToEndOfFile()
+                    let errMsg = String(data: errData, encoding: .utf8) ?? "exit code \(proc.terminationStatus)"
+                    continuation.resume(throwing: UsageError.cliExecutionFailed(errMsg))
+                } else {
+                    continuation.resume(returning: output)
+                }
+            }
+
+            do {
+                try process.run()
+            } catch {
+                continuation.resume(throwing: UsageError.cliExecutionFailed(error.localizedDescription))
+            }
+        }
+    }
+
+    /// 從 CLI JSON 輸出（array 格式）中找到 rate_limit_event 並解析
+    private func parseRateLimitEvent(from output: String) throws -> RateLimitInfo {
+        let trimmed = output.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty, let data = trimmed.data(using: .utf8) else {
+            throw UsageError.noRateLimitEvent
         }
 
-        let decoder = JSONDecoder()
-        var result: [String: UsageInfo] = [:]
-        for key in knownKeys {
-            guard let value = root[key], !(value is NSNull) else { continue }
-            let itemData = try JSONSerialization.data(withJSONObject: value)
-            result[key] = try decoder.decode(UsageInfo.self, from: itemData)
+        // CLI 輸出為 JSON array，每個元素為一個事件
+        guard let events = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]] else {
+            throw UsageError.parseError("Not a JSON array")
         }
-        return result
+
+        for event in events {
+            guard (event["type"] as? String) == "rate_limit_event",
+                  let infoDict = event["rate_limit_info"] as? [String: Any],
+                  let statusStr = infoDict["status"] as? String,
+                  let resetsAtInt = infoDict["resetsAt"] as? Int,
+                  let rateLimitType = infoDict["rateLimitType"] as? String,
+                  let overageStatus = infoDict["overageStatus"] as? String,
+                  let isUsingOverage = infoDict["isUsingOverage"] as? Bool
+            else { continue }
+
+            guard let status = RateLimitStatus(rawValue: statusStr) else {
+                throw UsageError.parseError("Unknown status: \(statusStr)")
+            }
+
+            return RateLimitInfo(
+                status: status,
+                resetsAt: Date(timeIntervalSince1970: TimeInterval(resetsAtInt)),
+                rateLimitType: rateLimitType,
+                overageStatus: overageStatus,
+                isUsingOverage: isUsingOverage
+            )
+        }
+
+        throw UsageError.noRateLimitEvent
     }
 }

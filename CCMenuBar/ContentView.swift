@@ -17,7 +17,8 @@ struct ContentView: View {
             HStack {
                 Image(systemName: "chart.bar.fill")
                     .foregroundStyle(.blue)
-                Text("Claude Usage")
+                Text(String(localized: "Claude Rate Limit",
+                            comment: "Main window title showing Claude rate limit status"))
                     .font(.headline)
                 Spacer()
                 // 手動刷新按鈕
@@ -39,7 +40,8 @@ struct ContentView: View {
                     Spacer()
                     ProgressView()
                         .controlSize(.small)
-                    Text("Loading...")
+                    Text(String(localized: "Loading...",
+                                comment: "Loading indicator text while fetching usage data"))
                         .foregroundStyle(.secondary)
                         .padding(.leading, 4)
                     Spacer()
@@ -47,26 +49,35 @@ struct ContentView: View {
                 .padding(.vertical, 8)
 
             case .loaded:
-                ForEach(viewModel.usageItems, id: \.category) { item in
-                    UsageRowView(category: item.category, info: item.info)
+                if let info = viewModel.rateLimitInfo {
+                    UsageRowView(info: info)
                 }
 
                 if let lastUpdated = viewModel.lastUpdated {
                     let timeString = lastUpdated.formatted(date: .omitted, time: .standard)
-                    Text("Updated at \(timeString)")
+                    Text(String(localized: "Updated at \(timeString)",
+                                comment: "Timestamp showing when data was last refreshed"))
                         .font(.caption2)
                         .foregroundStyle(.tertiary)
                 }
 
-            case .error(let message):
+            case .error(let usageError):
                 VStack(spacing: 8) {
                     Image(systemName: "exclamationmark.triangle")
                         .font(.title2)
                         .foregroundStyle(.orange)
-                    Text(message)
+                    Text(usageError.errorDescription ?? "")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                         .multilineTextAlignment(.center)
+                    // cliNotFound 時額外顯示安裝說明連結
+                    if case .cliNotFound = usageError {
+                        Link(String(localized: "Install Claude Code →",
+                                    comment: "Button to open Claude Code installation page"),
+                             destination: URL(string: "https://claude.ai/download")!)
+                            .font(.caption)
+                            .padding(.top, 2)
+                    }
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 8)
@@ -74,48 +85,9 @@ struct ContentView: View {
 
             Divider()
 
-            // Menu Bar 顯示設定
-            VStack(alignment: .leading, spacing: 6) {
-                Text("Menu Bar Display")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-
-                // 文字顯示：勾選要顯示的指標
-                ForEach(UsageCategory.allCases) { category in
-                    Toggle(isOn: categoryBinding(category)) {
-                        Text(category.displayName)
-                            .font(.caption)
-                    }
-                    .toggleStyle(.checkbox)
-                }
-
-                Divider()
-                    .padding(.vertical, 2)
-
-                // 儀表盤圖示來源
-                HStack {
-                    Text("Gauge Indicator")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                    Spacer()
-                    Picker("", selection: Binding(
-                        get: { viewModel.gaugeCategoryRaw },
-                        set: { viewModel.gaugeCategoryRaw = $0 }
-                    )) {
-                        ForEach(UsageCategory.allCases) { category in
-                            Text(category.displayName).tag(category.rawValue)
-                        }
-                    }
-                    .labelsHidden()
-                    .font(.caption)
-                    .frame(width: 120)
-                }
-            }
-
-            Divider()
-
             // 結束按鈕
-            Button("Quit CCMenuBar") {
+            Button(String(localized: "Quit CCMenuBar",
+                          comment: "Button to quit the application")) {
                 NSApplication.shared.terminate(nil)
             }
             .buttonStyle(.plain)
@@ -125,8 +97,7 @@ struct ContentView: View {
         .padding(16)
         .frame(width: 280)
         .onAppear {
-            // 若尚未載入資料則立即刷新（通常 App 啟動時已由 label .task 啟動）
-            if viewModel.usageItems.isEmpty {
+            if viewModel.rateLimitInfo == nil {
                 viewModel.startAutoRefresh()
             }
         }
@@ -135,32 +106,6 @@ struct ContentView: View {
     private var isLoading: Bool {
         if case .loading = viewModel.state { return true }
         return false
-    }
-
-    /// 為特定類別建立勾選 Binding，連動 menuBarCategoriesRaw
-    private func categoryBinding(_ category: UsageCategory) -> Binding<Bool> {
-        Binding(
-            get: {
-                viewModel.menuBarCategoriesRaw
-                    .split(separator: ",")
-                    .map(String.init)
-                    .contains(category.rawValue)
-            },
-            set: { isOn in
-                var keys = viewModel.menuBarCategoriesRaw
-                    .split(separator: ",")
-                    .map(String.init)
-                    .filter { !$0.isEmpty }
-                if isOn {
-                    if !keys.contains(category.rawValue) {
-                        keys.append(category.rawValue)
-                    }
-                } else {
-                    keys.removeAll { $0 == category.rawValue }
-                }
-                viewModel.menuBarCategoriesRaw = keys.joined(separator: ",")
-            }
-        )
     }
 }
 

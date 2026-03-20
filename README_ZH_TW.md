@@ -1,41 +1,35 @@
 # CCMenuBar
 
-macOS Menu Bar App，即時顯示 Claude Code 的 API 用量限制。
+macOS Menu Bar App，透過執行 `claude` CLI 即時顯示 Claude Code 的速率限制狀態。
 
 [English](README.md)
 
 ## 功能
 
-- 顯示五種用量指標：5 小時、7 天、7 天 Sonnet、7 天 Opus、7 天 OAuth Apps
-- Menu Bar 儀表盤圖示動態反映目前用量（指針位置隨用量變化）
-- 可自訂 Menu Bar 顯示內容：選擇要在圖示旁顯示哪些指標的數字
-- 進度條顏色依用量變化（綠 / 黃 / 橙 / 紅）
-- 顯示每個指標的重設時間
-- 每 5 分鐘自動刷新，也可手動點擊刷新
+- 顯示目前速率限制狀態：**可用** 或 **已達上限**
+- Menu Bar 儀表盤圖示動態反映 5 小時視窗的已用時間比例（指針位置隨時間變化）
+- 達到速率限制時圖示與文字變為**紅色**，使用超額配額時變為**橘色**
+- 顯示速率限制重設的剩餘時間（相對格式，例如「2 小時後」）
+- 每 5 分鐘自動刷新，也可手動點擊刷新按鈕
+- 找不到 CLI 時顯示安裝提示與直達連結
 - 不顯示 Dock 圖示，僅常駐於 Menu Bar
+- 支援 12 種語言
 
 ## 系統需求
 
-- macOS 26.2+
+- macOS 15.0+
 - 已安裝並登入 [Claude Code](https://claude.ai/download)
 
-## OAuth Token 來源
+## 運作原理
 
-App 依下列優先順序讀取 OAuth Token：
+CCMenuBar 執行 `claude` CLI 並帶入 `--verbose --output-format json` 參數，從 JSON 輸出中取得 `rate_limit_event`，解析速率限制狀態與重設時間。App 本身不直接發出任何 API 請求，也不需要 Token 設定。
 
-1. 環境變數 `CLAUDE_CODE_OAUTH_TOKEN`
-2. `~/.claude/.credentials.json`
-3. macOS Keychain（服務名稱：`Claude Code-credentials`）
+CLI 依下列路徑順序搜尋：
 
-只要已登入 Claude Code，Token 會自動從 Keychain 或 credentials 檔案讀取，無需額外設定。
-
-## 安全性說明
-
-首次啟動時，macOS 可能會出現以下對話框，詢問是否允許 CCMenuBar 存取 Claude Code 的 Keychain 項目：
-
-> *「CCMenuBar 想要存取鑰匙圈中的項目 'Claude Code-credentials'。」*
-
-這是正常行為，並非安全威脅。CCMenuBar 需要讀取由 Claude Code 儲存在系統 Keychain 中的 OAuth Token，才能向 API 發出認證請求。請點擊**允許**（或**永遠允許**以避免每次詢問）。App 不會儲存、傳送或修改任何 Keychain 資料，僅用於讀取 Token。
+1. `~/.local/bin/claude`（原生安裝）
+2. `~/.claude/bin/claude`
+3. `/opt/homebrew/bin/claude`
+4. `/usr/local/bin/claude`
 
 ## 建置方式
 
@@ -53,20 +47,9 @@ open CCMenuBar.xcodeproj
 CCMenuBar/
 ├── CCMenuBarApp.swift       # App 進入點，Menu Bar Extra 設定
 ├── ContentView.swift        # 彈出視窗主 UI
-├── UsageService.swift       # API 呼叫與資料模型
-├── TokenProvider.swift      # OAuth Token 讀取邏輯
-├── UsageViewModel.swift     # 狀態管理、自動刷新與 Menu Bar 顯示設定
-└── UsageRowView.swift       # 單列使用量 UI 元件
-```
-
-## API
-
-使用 Anthropic OAuth Usage API：
-
-```
-GET https://api.anthropic.com/api/oauth/usage
-Authorization: Bearer <OAuth Token>
-anthropic-beta: oauth-2025-04-20
+├── UsageService.swift       # CLI 執行、JSON 解析與資料模型
+├── UsageViewModel.swift     # 狀態管理、自動刷新與儀表盤邏輯
+└── UsageRowView.swift       # 速率限制狀態列 UI 元件
 ```
 
 ## 授權
