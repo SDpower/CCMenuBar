@@ -131,10 +131,9 @@ struct UsageViewModelTests {
         #expect(vm.gaugeSymbol == "gauge.with.dots.needle.bottom.0percent")
     }
 
-    @Test("gaugeSymbol — allowed 剩餘接近 5 小時時為 0%")
+    @Test("gaugeSymbol — allowed 剩餘 4.9 小時（已用 < 25%）為 0%")
     func gaugeSymbolAllowedFull() {
         let vm = UsageViewModel()
-        // 剩餘 4.9 小時 ≈ 已用 2%，落在 0% 區間
         vm.rateLimitInfo = RateLimitInfo(
             status: .allowed,
             resetsAt: Date().addingTimeInterval(4.9 * 3600),
@@ -145,10 +144,9 @@ struct UsageViewModelTests {
         #expect(vm.gaugeSymbol == "gauge.with.dots.needle.bottom.0percent")
     }
 
-    @Test("gaugeSymbol — allowed 剩餘約 2.5 小時時為 50%")
+    @Test("gaugeSymbol — allowed 剩餘 2.5 小時（已用 50%）為 50%")
     func gaugeSymbolAllowedHalf() {
         let vm = UsageViewModel()
-        // 剩餘 2.5 小時 = 已用 50%
         vm.rateLimitInfo = RateLimitInfo(
             status: .allowed,
             resetsAt: Date().addingTimeInterval(2.5 * 3600),
@@ -157,6 +155,19 @@ struct UsageViewModelTests {
             isUsingOverage: false
         )
         #expect(vm.gaugeSymbol == "gauge.with.dots.needle.bottom.50percent")
+    }
+
+    @Test("gaugeSymbol — allowed 剩餘 1 小時（已用 80%）為 100%")
+    func gaugeSymbolAllowedNearEnd() {
+        let vm = UsageViewModel()
+        vm.rateLimitInfo = RateLimitInfo(
+            status: .allowed,
+            resetsAt: Date().addingTimeInterval(1 * 3600),
+            rateLimitType: "five_hour",
+            overageStatus: "allowed",
+            isUsingOverage: false
+        )
+        #expect(vm.gaugeSymbol == "gauge.with.dots.needle.bottom.100percent")
     }
 
     @Test("gaugeSymbol — rejected 時強制為 100%")

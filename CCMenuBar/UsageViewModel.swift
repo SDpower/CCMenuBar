@@ -49,12 +49,11 @@ final class UsageViewModel {
         let windowSeconds: TimeInterval = 5 * 3600
         let remaining = max(0, info.resetsAt.timeIntervalSinceNow)
         let usedRatio = 1.0 - (remaining / windowSeconds)
+        // 系統只有 0% / 50% / 100% 三個刻度
         switch usedRatio {
-        case ..<0.125: return "gauge.with.dots.needle.bottom.0percent"
-        case 0.125..<0.375: return "gauge.with.dots.needle.bottom.25percent"
-        case 0.375..<0.625: return "gauge.with.dots.needle.bottom.50percent"
-        case 0.625..<0.875: return "gauge.with.dots.needle.bottom.75percent"
-        default:             return "gauge.with.dots.needle.bottom.100percent"
+        case ..<0.25:  return "gauge.with.dots.needle.bottom.0percent"
+        case 0.25..<0.75: return "gauge.with.dots.needle.bottom.50percent"
+        default:       return "gauge.with.dots.needle.bottom.100percent"
         }
     }
 
